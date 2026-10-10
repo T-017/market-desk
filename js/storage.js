@@ -34,6 +34,7 @@ export const storage = {
     write(KEYS.watchlist, list);
   },
   addSymbol(symbol) {
+    const upper = symbol.toUpperCase();
     const list = this.getWatchlist();
     if (!list.includes(upper)) {
       list.push(upper);
