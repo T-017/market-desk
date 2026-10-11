@@ -55,3 +55,21 @@ export async function fetchLatestRates() {
   }
 }
 
+export function convert(amount, from, to, snapshot) {
+  const rates = snapshot.rates || {};
+  const base = snapshot.base || "EUR";
+  const fromRate = from === base ? 1 : rates[from];
+  const toRate = to === base ? 1 : rates[to];
+  if (!fromRate || !toRate) {
+    throw new Error(`Missing rate for ${from} or ${to}`);
+  }
+  return (amount / fromRate) * toRate;
+}
+
+export function listSymbols(snapshot) {
+  const codes = Object.keys(snapshot.rates || {});
+  if (snapshot.base && !codes.includes(snapshot.base)) {
+    codes.unshift(snapshot.base);
+  }
+  return codes.sort();
+}
