@@ -40,7 +40,51 @@
     </div>
   </header>
 
-  <main id="main" class="wrap pro">
+  <main id="main" class="wrap">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <p class="kicker">Market Desk</p>
+      <h1 id="hero-title">Global Quotes and Currency Converter</h1>
+      <p class="lede">
+        Market Desk pairs end-of-day equity quotes from Marketstack with foreign exchange rates from Fixer to provide a comprehensive view of global financial markets.
+        Flip a card for fundamental details. Pin names to a watchlist for easy tracking.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="markets.html">Open the catalog</a>
+        <a class="btn btn--ghost" href="#converter">Convert currency</a>
+      </div>
+      <div class="stats" aria-label="Desk snapshot">
+        <div class="stat">
+          <b id="stat-names">10</b>
+          <span>Tracker issuers</span>
+        </div>
+        <div class="stat">
+          <b id="stat-markets">3</b>
+          <span>Watchlist names</span>
+        </div>
+        <div class="stat">
+          <b id="stat-live">demo data</b>
+          <span>Quote sources</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section panel-grid" aria-label="Watchlist and converter">
+      <article class="panel" id="watch">
+        <header class="section-head">
+          <div>
+            <p class="kicker">Local Storage</p>
+            <h2>Watchlist</h2>
+          </div>
+        </header>
+        <p class="lede">Pinned tickers remain after refreshing the page. Add or remove names from any flipped card.</p>
+        <ul class="watch-list" id="watchlist"></ul>
+      </article>
+
+      <article class="panel" id="converter">
+        
+      </article>
+
+    </section>
   </main>
   
   <footer class="site-footer">
