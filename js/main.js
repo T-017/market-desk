@@ -44,26 +44,22 @@ class MarketDeskApp {
   }
 
   bindEvents() {
-    // 1. Theme toggle
     qs("#theme-toggle")?.addEventListener("click", () => {
       const next = storage.getTheme() === "dark" ? "light" : "dark";
       storage.setTheme(next);
       this.applyTheme(next);
     });
 
-    // 2. Mobile nav
     qs("#nav-toggle")?.addEventListener("click", () => {
       const nav = qs("#site-nav");
       const expanded = nav.classList.toggle("is-open");
       qs("#nav-toggle").setAttribute("aria-expanded", String(expanded));
     });
 
-    // 3. Search (keyup)
     qs("#ticker-search")?.addEventListener("keyup", (event) => {
       this.filterCatalog(event.target.value);
     });
 
-    // 4. Sector chips (click)
     qs("#sector-filters")?.addEventListener("click", (event) => {
       const chip = event.target.closest("[data-sector]");
       if (!chip) return;
@@ -74,7 +70,6 @@ class MarketDeskApp {
       this.filterCatalog(qs("#ticker-search")?.value || "");
     });
 
-    // 5. Watchlist add / remove + card inspect (delegated click)
     document.addEventListener("click", (event) => {
       const toggle = event.target.closest("[data-action='toggle-watch']");
       if (toggle) {
@@ -90,3 +85,54 @@ class MarketDeskApp {
         this.highlightTicker(card.dataset.symbol);
       }
     });
+
+    qs("#fx-form")?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      this.runConversion();
+    });
+
+    qs("#fx-from")?.addEventListener("change", (event) => {
+      storage.setBaseCurrency(event.target.value);
+    });
+
+    window.addEventListener("hashchange", () => this.hydrateNav());
+  }
+
+  applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    const btn = qs("#theme-toggle");
+    if (btn) {
+      btn.textContent = theme === "dark" ? "Light mode" : "Dark mode";
+      btn.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+    }
+  }
+
+  hydrateNav() {
+    const hash = window.location.hash || "#home";
+    qsa(".site-nav a").forEach((link) => {
+      link.classList.toggle("is-current", link.getAttribute("href") === hash);
+    });
+  }
+
+  companyBySymbol(symbol) {
+    return this.companies.find((c) => c.symbol === symbol.toUpperCase());
+  }
+
+  async refreshQuotes() {
+    const symbols = [
+      ...new Set([
+        ...this.companies.map((c) => c.symbol),
+        ...storage.getWatchlist(),
+      ]),
+    ];
+    const grid = qs("#catalog-grid");
+    setBusy(grid, true);
+    try {
+      const rows = await fetchEod(symbols);
+      this.quotes = new Map(rows.map((q) => [q.symbol, q]));
+    } catch (error) {
+      toast(error.message, "error");
+    } finally {
+      setBusy(grid, false);
+    }
+  }
