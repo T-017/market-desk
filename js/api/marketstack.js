@@ -9,6 +9,12 @@ const MOCK_EOD = {
   SHEL: { close: 72.18, open: 71.90, high: 72.65, low: 71.40, volume: 4102300, date: "2026-09-25" },
   SONY: { close: 21.05, open: 20.88, high: 21.22, low: 20.71, volume: 3901400, date: "2026-09-25" },
   BABA: { close: 96.44, open: 95.10, high: 97.30, low: 94.80, volume: 15220300, date: "2026-09-25" },
+  TM: { close: 188.67, open: 186.40, high: 189.50, low: 185.90, volume: 312400, date: "2026-10-13" },
+  NTDOY: { close: 12.24, open: 12.10, high: 12.40, low: 12.02, volume: 842000, date: "2026-10-07" },
+  GOOGL: { close: 353.78, open: 350.20, high: 355.10, low: 349.40, volume: 18442000, date: "2026-10-13" },
+  NSANY: { close: 3.64, open: 3.65, high: 3.65, low: 3.61, volume: 476563, date: "2026-10-13" },
+  HMC: { close: 33.33, open: 32.80, high: 33.50, low: 32.70, volume: 1460000, date: "2026-10-13" },
+  TTWO: { close: 152.40, open: 150.10, high: 153.20, low: 149.60, volume: 1820000, date: "2026-10-13" },
 };
 
 function getKey() {
