@@ -193,5 +193,50 @@
     "tagline": "Broadcast yourself.",
     "website": "https://www.youtube.com",
     "accent": "#ff0000"
+  },
+  {
+    "symbol": "NSANY",
+    "name": "Nissan Motor Co., Ltd.",
+    "exchange": "OTC",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Manufacturers",
+    "country": "Japan",
+    "currency": "USD",
+    "founded": 1933,
+    "headquarters": "Yokohama, Japan",
+    "riskLevel": "High",
+    "tagline": "Innovation that excites.",
+    "website": "https://www.nissan-global.com",
+    "accent": "#c3002f"
+  },
+  {
+    "symbol": "HMC",
+    "name": "Honda Motor Co., Ltd.",
+    "exchange": "NYSE",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Manufacturers",
+    "country": "Japan",
+    "currency": "USD",
+    "founded": 1948,
+    "headquarters": "Tokyo, Japan",
+    "riskLevel": "Moderate",
+    "tagline": "The power of dreams.",
+    "website": "https://global.honda",
+    "accent": "#e40521"
+  },
+  {
+    "symbol": "TTWO",
+    "name": "Take-Two Interactive Software, Inc.",
+    "exchange": "NASDAQ",
+    "sector": "Communication Services",
+    "industry": "Electronic Gaming & Multimedia",
+    "country": "United States",
+    "currency": "USD",
+    "founded": 1993,
+    "headquarters": "New York, New York",
+    "riskLevel": "High",
+    "tagline": "Home of Grand Theft Auto and NBA 2K.",
+    "website": "https://www.take2games.com",
+    "accent": "#000000"
   }
 ]
