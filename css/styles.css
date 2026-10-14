@@ -288,3 +288,40 @@ select {
     display: block;
   }
 }
+
+
+/* Layout ------------------------------------------------------------------------------------------------------------------------- */
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+.section {
+  margin: 2.5rem 0;
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.lede {
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+
+/* Buttons chips and fields ------------------------------------------------------------------------------------------------------------------------- */
