@@ -263,3 +263,27 @@ class MarketDeskApp {
     fill(from, storage.getBaseCurrency());
     fill(to, storage.getBaseCurrency() === "USD" ? "EUR" : "USD");
   }
+
+  updateConverter() {
+    const from = qs("#fx-from")?.value;
+    const to = qs("#fx-to")?.value;
+    const amount = parseFloat(qs("#fx-amount")?.value || "0");
+    if (!from || !to || isNaN(amount)) return;
+
+    const rate = this.fx[`${from}_${to}`];
+    const result = rate ? amount * rate : 0;
+    qs("#fx-result").textContent = result.toFixed(2);
+  }
+
+  bindConverterEvents() {
+    qs("#fx-from")?.addEventListener("change", () => this.updateConverter());
+    qs("#fx-to")?.addEventListener("change", () => this.updateConverter());
+    qs("#fx-amount")?.addEventListener("input", () => this.updateConverter());
+  }
+
+  initConverter() {
+    this.populateConverter();
+    this.bindConverterEvents();
+    this.updateConverter();
+  }
+}
