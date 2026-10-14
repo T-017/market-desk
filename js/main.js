@@ -177,24 +177,50 @@ class MarketDeskApp {
   }
 
   filterCatalog(query) {
-    this.filter = query;
-    this.renderCatalog();
-  }
-  get companies() {
-    if (!this.filter || this.filter === "all") return this._companies;
-    return this._companies.filter((c) => c.sector === this.filter);
+    const q = query.trim().toLowerCase();
+    qsa("#catalog-grid .stock-card").forEach((card) => {
+      const company = this.companyBySymbol(card.dataset.symbol);
+      if (!company) return;
+      const hay = `${company.symbol} ${company.name} ${company.sector} ${company.country}`.toLowerCase();
+      const sectorOk = this.filter === "all" || company.sector === this.filter;
+      card.hidden = !(sectorOk && hay.includes(q));
+    });
   }
 
   renderWatchlist() {
-    const host = qs("#watchlist-grid");
+    const host = qs("#watchlist");
     if (!host) return;
     host.innerHTML = "";
-    const watch = new Set(storage.getWatchlist());
-    this._companies.filter((c) => watch.has(c.symbol)).forEach((company) => {
-      const quote = this.quotes.get(company.symbol) || {
-        close: 0, open: 0, high: 0, low: 0, volume: 0, date: "—", source: "mock",
-      };
-      host.appendChild(renderStockCard(company, quote, { watched: true }));
+    const list = storage.getWatchlist();
+    if (!list.length) {
+      host.appendChild(renderEmptyState("Your watchlist is empty. Flip a card and add a ticker."));
+      return;
+    }
+    list.forEach((symbol) => {
+      const company = this.companyBySymbol(symbol);
+      const quote = this.quotes.get(symbol);
+      const li = document.createElement("li");
+      li.className = "watch-item";
+      const name = company?.name || symbol;
+      const price = quote ? formatMoney(quote.close, company?.currency || "USD") : "—";
+      li.innerHTML = `
+        <button type="button" class="watch-item__main" data-jump="${symbol}">
+          <span class="watch-item__sym">${symbol}</span>
+          <span class="watch-item__name">${name}</span>
+          <span class="watch-item__px">${price}</span>
+        </button>
+        <button type="button" class="icon-btn" data-action="toggle-watch" data-symbol="${symbol}" aria-label="Remove ${symbol}">×</button>
+      `;
+      host.appendChild(li);
+    });
+
+    host.querySelectorAll("[data-jump]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const symbol = btn.dataset.jump;
+        storage.setLastTicker(symbol);
+        this.highlightTicker(symbol);
+        document.getElementById("markets")?.scrollIntoView({ behavior: "smooth" });
+      });
     });
   }
 
@@ -211,4 +237,29 @@ class MarketDeskApp {
     this.renderCatalog();
     this.filterCatalog(qs("#ticker-search")?.value || "");
     this.updateHeroStats();
+  }
+
+  populateConverter() {
+    if (!this.fx) return;
+    const from = qs("#fx-from");
+    const to = qs("#fx-to");
+    if (!from || !to) return;
+
+    const preferred = popularCurrencies();
+    const all = listSymbols(this.fx);
+    const codes = [...new Set([...preferred, ...all])];
+
+    const fill = (select, selected) => {
+      select.innerHTML = "";
+      codes.forEach((code) => {
+        const opt = document.createElement("option");
+        opt.value = code;
+        opt.textContent = code;
+        select.appendChild(opt);
+      });
+      select.value = codes.includes(selected) ? selected : codes[0];
+    };
+
+    fill(from, storage.getBaseCurrency());
+    fill(to, storage.getBaseCurrency() === "USD" ? "EUR" : "USD");
   }
