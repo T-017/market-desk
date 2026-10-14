@@ -136,3 +136,79 @@ class MarketDeskApp {
       setBusy(grid, false);
     }
   }
+
+  async refreshFx() {
+    this.fx = await fetchLatestRates();
+    const stamp = qs("#fx-stamp");
+    if (stamp && this.fx) {
+      stamp.textContent = `Rates as of ${this.fx.date} · base ${this.fx.base}${this.fx === null ? "" : ""}`;
+    }
+  }
+
+  renderCatalog() {
+    const host = qs("#catalog-grid");
+    if (!host) return;
+    host.innerHTML = "";
+    const watch = new Set(storage.getWatchlist());
+    const sectors = ["all", ...new Set(this.companies.map((c) => c.sector))];
+    this.renderSectorChips(sectors);
+
+    const limit = host.dataset.limit ? Number(host.dataset.limit) : this.companies.length;
+    this.companies.slice(0, limit).forEach((company) => {
+      const quote = this.quotes.get(company.symbol) || {
+        close: 0, open: 0, high: 0, low: 0, volume: 0, date: "—", source: "mock",
+      };
+      host.appendChild(renderStockCard(company, quote, { watched: watch.has(company.symbol) }));
+    });
+  }
+
+  renderSectorChips(sectors) {
+    const host = qs("#sector-filters");
+    if (!host) return;
+    host.innerHTML = "";
+    sectors.forEach((sector) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = `chip${sector === this.filter ? " is-active" : ""}`;
+      btn.dataset.sector = sector;
+      btn.textContent = sector === "all" ? "All sectors" : sector;
+      host.appendChild(btn);
+    });
+  }
+
+  filterCatalog(query) {
+    this.filter = query;
+    this.renderCatalog();
+  }
+  get companies() {
+    if (!this.filter || this.filter === "all") return this._companies;
+    return this._companies.filter((c) => c.sector === this.filter);
+  }
+
+  renderWatchlist() {
+    const host = qs("#watchlist-grid");
+    if (!host) return;
+    host.innerHTML = "";
+    const watch = new Set(storage.getWatchlist());
+    this._companies.filter((c) => watch.has(c.symbol)).forEach((company) => {
+      const quote = this.quotes.get(company.symbol) || {
+        close: 0, open: 0, high: 0, low: 0, volume: 0, date: "—", source: "mock",
+      };
+      host.appendChild(renderStockCard(company, quote, { watched: true }));
+    });
+  }
+
+  toggleWatch(symbol) {
+    const current = storage.getWatchlist();
+    if (current.includes(symbol)) {
+      storage.removeSymbol(symbol);
+      toast(`${symbol} removed from watchlist`);
+    } else {
+      storage.addSymbol(symbol);
+      toast(`${symbol} added to watchlist`);
+    }
+    this.renderWatchlist();
+    this.renderCatalog();
+    this.filterCatalog(qs("#ticker-search")?.value || "");
+    this.updateHeroStats();
+  }
