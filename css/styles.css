@@ -484,80 +484,151 @@ a:focus-visible {
 /* Cards with Flipping Effect ------------------------------------------------------------------------------------------------------------------ */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
 }
 
 .stock-card {
-  background: var(--bg-elevated);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 1rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  perspective: 1400px;
+  min-height: 292px;
+  cursor: pointer;
 }
 
-.stock-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-}
-
-.stock-card .front,
-.stock-card .back {
-  border-radius: 16px;
-  backface-visibility: hidden;
-}
-
-.stock-card .back {
-  transform: rotateY(180deg);
-}
-
-.stock-card .inner {
+.stock-card__inner {
   position: relative;
-  width: 100%;
-  height: 100%;
+  min-height: 292px;
   transform-style: preserve-3d;
-  transition: transform 0.6s;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.stock-card:hover .inner {
+.stock-card.is-flipped .stock-card__inner {
   transform: rotateY(180deg);
 }
 
-.stock-card .front,
-.stock-card .back {
+.stock-card__face {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  padding: 1rem 1.05rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
-.stock-card_head {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+.stock-card:hover .stock-card__face--front {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
 }
 
-.stock-card_content {
-  font-size: 0.9rem;
+.stock-card.is-focused .stock-card__face {
+  border-color: var(--gold);
+}
+
+.stock-card__face--front {
+  border-top: 3px solid var(--accent);
+}
+
+.stock-card__face--back {
+  transform: rotateY(180deg);
+  overflow: auto;
+}
+
+.stock-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.stock-card__ticker {
+  font-family: var(--mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.stock-card__name {
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.stock-card__price {
+  font-size: 1.55rem;
+  font-weight: 700;
+  margin: 0.2rem 0 0.8rem;
+}
+
+.stock-card__meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem 0.8rem;
+  margin: 0;
+}
+
+.stock-card__meta dt {
   color: var(--muted);
+  font-size: 0.75rem;
 }
 
-.stock-card_content p {
-  margin: 0.5rem 0 0;
+.stock-card__meta dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.92rem;
 }
 
-.stock-card_ticker {
-  font-weight: bold;
-  margin-top: 0.5rem;
+.stock-card__source {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
 }
 
-.stock-card_name {
-  font-weight: bold;
-  margin-top: 0.5rem;
+.stock-card__tagline {
+  color: var(--muted);
+  font-style: italic;
 }
 
-.stock-card_price {
-  font-weight: bold;
-  margin-top: 0.5rem;
+.stock-card__facts {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
 }
 
+.stock-card__facts li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.28rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.stock-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.pill {
+  font-size: 0.75rem;
+  border-radius: 999px;
+  padding: 0.18rem 0.5rem;
+  font-weight: 700;
+}
+
+.pill--up {
+  color: #064e3b;
+  background: #6ee7b7;
+}
+
+.pill--down {
+  color: #7f1d1d;
+  background: #fca5a5;
+}
+
+[data-theme="light"] .pill--up {
+  background: #bbf7d0;
+}
+
+/* Watchlist and converter ------------------------------------------------------------------------------------------------------------------ */
