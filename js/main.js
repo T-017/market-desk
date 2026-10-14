@@ -264,26 +264,53 @@ class MarketDeskApp {
     fill(to, storage.getBaseCurrency() === "USD" ? "EUR" : "USD");
   }
 
-  updateConverter() {
+  runConversion() {
+    const amount = Number(qs("#fx-amount")?.value);
     const from = qs("#fx-from")?.value;
     const to = qs("#fx-to")?.value;
-    const amount = parseFloat(qs("#fx-amount")?.value || "0");
-    if (!from || !to || isNaN(amount)) return;
-
-    const rate = this.fx[`${from}_${to}`];
-    const result = rate ? amount * rate : 0;
-    qs("#fx-result").textContent = result.toFixed(2);
+    const out = qs("#fx-result");
+    if (!this.fx || Number.isNaN(amount)) {
+      toast("Enter a valid amount.", "error");
+      return;
+    }
+    try {
+      const result = convert(amount, from, to, this.fx);
+      out.innerHTML = `
+        <strong>${formatMoney(amount, from)}</strong>
+        equals
+        <strong>${formatMoney(result, to)}</strong>
+      `;
+      out.classList.add("is-pop");
+      setTimeout(() => out.classList.remove("is-pop"), 400);
+    } catch (error) {
+      toast(error.message, "error");
+    }
   }
 
-  bindConverterEvents() {
-    qs("#fx-from")?.addEventListener("change", () => this.updateConverter());
-    qs("#fx-to")?.addEventListener("change", () => this.updateConverter());
-    qs("#fx-amount")?.addEventListener("input", () => this.updateConverter());
+  updateHeroStats() {
+    const watchCount = storage.getWatchlist().length;
+    const liveCount = [...this.quotes.values()].filter((q) => q.source === "live").length;
+    qs("#stat-watch") && (qs("#stat-watch").textContent = String(watchCount));
+    qs("#stat-names") && (qs("#stat-names").textContent = String(this.companies.length));
+    qs("#stat-live") && (qs("#stat-live").textContent = liveCount ? `${liveCount} live` : "demo data");
   }
 
-  initConverter() {
-    this.populateConverter();
-    this.bindConverterEvents();
-    this.updateConverter();
+  highlightTicker(symbol) {
+    qsa(".stock-card").forEach((card) => {
+      card.classList.toggle("is-focused", card.dataset.symbol === symbol);
+    });
+    const target = qs(`.stock-card[data-symbol="${symbol}"]`);
+    target?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  restoreLastTicker() {
+    const last = storage.getLastTicker();
+    if (last) this.highlightTicker(last);
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const app = new MarketDeskApp();
+  app.init();
+  app.initConverter();
+});
