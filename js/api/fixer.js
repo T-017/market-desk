@@ -1,11 +1,11 @@
 const MOCK_RATES = {
   success: true,
-  timestamp: Date.now(),
+  timestamp: 1758940800,
   base: "EUR",
-  date: "9/26/2026",
+  date: "2026-09-26",
   rates: {
     USD: 1.1174,
-    EUR: 1.0,
+    EUR: 1,
     GBP: 0.8421,
     JPY: 161.35,
     CAD: 1.5122,
@@ -27,7 +27,7 @@ const MOCK_RATES = {
   },
 };
 
-const POPULAR = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "CNY", "MXN", "BRL", "INR", "CNY", "KRW"];
+const POPULAR = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "MXN", "BRL", "INR", "CNY", "KRW"];
 
 function getKey() {
   return window.MARKET_DESK_CONFIG?.FIXER_KEY || "";

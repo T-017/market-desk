@@ -13,17 +13,14 @@ const MOCK_EOD = {
 
 function getKey() {
   return window.MARKET_DESK_CONFIG?.MARKETSTACK_KEY || "";
-};
-
-function getKey() {
-  return window.MARKET_DESK_CONFIG?.MARKETSTACK_KEY || "";
 }
 
 function buildUrl(symbols) {
   const key = getKey();
   const joined = symbols.join(",");
-  return `https://api.marketstack.com/v1/eod?access_key=${encodeURIComponent(key)}&symbols=${encodeURIComponent(joined)}`;
+  return `http://api.marketstack.com/v1/eod/latest?access_key=${encodeURIComponent(key)}&symbols=${encodeURIComponent(joined)}`;
 }
+
 
 export async function fetchEod(symbols) {
   const unique = [...new Set(symbols.map((s) => s.toUpperCase()))];
@@ -37,7 +34,7 @@ export async function fetchEod(symbols) {
     const response = await fetch(buildUrl(unique));
     if (!response.ok) throw new Error(`Marketstack HTTP ${response.status}`);
     const payload = await response.json();
-    if (!payload.data) throw new Error(payload.error?.message || "Missing data");
+    if (!payload.data) throw new Error(payload.error?.message || "No data");
 
     const bySymbol = new Map();
     for (const row of payload.data) {
@@ -49,6 +46,7 @@ export async function fetchEod(symbols) {
         low: row.low,
         volume: row.volume,
         date: row.date?.slice(0, 10) || "",
+        source: "live",
       });
     }
     return unique.map((symbol) => bySymbol.get(symbol) || mockQuote(symbol));

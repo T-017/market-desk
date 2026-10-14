@@ -15,8 +15,8 @@ class MarketDeskApp {
   constructor() {
     this.companies = [];
     this.quotes = new Map();
-    this.fix = null;
-    this.filler = "all";
+    this.fx = null;
+    this.filter = "all";
   }
 
   async init() {
@@ -312,5 +312,4 @@ class MarketDeskApp {
 document.addEventListener("DOMContentLoaded", () => {
   const app = new MarketDeskApp();
   app.init();
-  app.initConverter();
 });

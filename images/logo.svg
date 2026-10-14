@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Market Desk</title>
+  <desc id="desc">Stylized mountain peak over a rising market line</desc>
+  <rect width="64" height="64" rx="14" fill="#121a2b"/>
+  <path d="M10 44 L24 24 L32 34 L44 16 L54 28" fill="none" stroke="#7dd3fc" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="44" cy="16" r="3.2" fill="#e8c47c"/>
+  <path d="M10 50 H54" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+</svg>

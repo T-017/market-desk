@@ -1,4 +1,4 @@
-/* Root and Theme Variables ------------------------------------------------------------------------------------------------------------------------- */
+/* Theme variables ----------------------------------------------------------------------------------------------------------------------------------- */
 :root {
   --bg: #0b1220;
   --bg-elevated: #121a2b;
@@ -34,7 +34,7 @@
 }
 
 
-/* Reset HTML elements ------------------------------------------------------------------------------------------------------------------------- */
+/* Reset -------------------------------------------------------------------------------------------------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -95,7 +95,7 @@ select {
 }
 
 
-/* Skip link for accessibility ------------------------------------------------------------------------------------------------------------------------- */
+/* Skip link --------------------------------------------------------------------------------------------------------------------------------------- */
 .skip-link {
   position: absolute;
   left: 1rem;
@@ -111,7 +111,8 @@ select {
   top: 0.75rem;
 }
 
-/* Header and Navigation ------------------------------------------------------------------------------------------------------------------------- */
+
+/* Header / navigation --------------------------------------------------------------------------------------------------------------------------------- */
 .site-header {
   position: sticky;
   top: 0;
@@ -290,7 +291,7 @@ select {
 }
 
 
-/* Layout ------------------------------------------------------------------------------------------------------------------------- */
+/* Layout helpers ----------------------------------------------------------------------------------------------------------------------------------- */
 .wrap {
   max-width: var(--max);
   margin: 0 auto;
@@ -324,7 +325,7 @@ select {
 }
 
 
-/* Buttons chips and fields ------------------------------------------------------------------------------------------------------------------------- */
+/* Buttons, chips, fields ------------------------------------------------------------------------------------------------------------------------ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -411,7 +412,8 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-/* Hero ------------------------------------------------------------------------------------------------------------------------- */
+
+/* Hero ------------------------------------------------------------------------------------------------------------------------------------------ */
 .hero {
   position: relative;
   overflow: hidden;
@@ -481,7 +483,8 @@ a:focus-visible {
   font-size: 0.82rem;
 }
 
-/* Cards with Flipping Effect ------------------------------------------------------------------------------------------------------------------ */
+
+/* Cards + 3D flip ----------------------------------------------------------------------------------------------------------------------------- */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -631,4 +634,210 @@ a:focus-visible {
   background: #bbf7d0;
 }
 
-/* Watchlist and converter ------------------------------------------------------------------------------------------------------------------ */
+
+/* Panels ------------------------------------------------------------------------------------------------------------------------------------------ */
+.panel-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 860px) {
+  .panel-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+.panel {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.15rem 1.2rem;
+  box-shadow: var(--shadow);
+}
+
+.watch-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.watch-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding: 0.45rem 0;
+}
+
+.watch-item__main {
+  display: grid;
+  grid-template-columns: 4.2rem 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.watch-item__sym {
+  font-family: var(--mono);
+  font-weight: 700;
+}
+
+.watch-item__name {
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.fx-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fx-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.fx-result {
+  min-height: 3rem;
+  border-radius: 12px;
+  background: var(--bg-soft);
+  padding: 0.8rem;
+}
+
+.fx-result.is-pop {
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.96);
+  }
+
+  60% {
+    transform: scale(1.03);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+#fx-stamp {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.empty-state {
+  color: var(--muted);
+}
+
+
+/* About page ----------------------------------------------------------------------------------------------------------------------------------- */
+.prose {
+  max-width: 72ch;
+}
+
+.prose h2 {
+  margin-top: 2rem;
+}
+
+.checklist {
+  padding-left: 1.1rem;
+}
+
+.checklist li {
+  margin: 0.35rem 0;
+}
+
+.callout {
+  border-left: 3px solid var(--gold);
+  background: var(--bg-elevated);
+  padding: 0.9rem 1rem;
+  border-radius: 0 12px 12px 0;
+}
+
+
+/* Footer + toasts ----------------------------------------------------------------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.4rem 1.25rem 2rem;
+  color: var(--muted);
+}
+
+.footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+#toast-host {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  z-index: 40;
+}
+
+.toast {
+  min-width: 220px;
+  max-width: 320px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast--error {
+  border-color: var(--danger);
+}
+
+[aria-busy="true"] {
+  opacity: 0.6;
+}
+
+@media (max-width: 799px) {
+  .header-inner {
+    flex-wrap: wrap;
+  }
+
+  .site-nav {
+    flex-basis: 100%;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
