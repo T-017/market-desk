@@ -4,7 +4,7 @@ import { fetchLatestRates, convert, listSymbols, popularCurrencies } from "./api
 import {
   qs,
   qsa,
-  toast,
+  message,
   renderStockCard,
   renderEmptyState,
   formatMoney,
@@ -31,7 +31,7 @@ class MarketDeskApp {
       const res = await fetch("./js/data/companies.json");
       this.companies = await res.json();
     } catch {
-      toast("Could not load company catalog.", "error");
+      message("Could not load company catalog.", "error");
       this.companies = [];
     }
 
@@ -131,7 +131,7 @@ class MarketDeskApp {
       const rows = await fetchEod(symbols);
       this.quotes = new Map(rows.map((q) => [q.symbol, q]));
     } catch (error) {
-      toast(error.message, "error");
+      message(error.message, "error");
     } finally {
       setBusy(grid, false);
     }
@@ -228,10 +228,10 @@ class MarketDeskApp {
     const current = storage.getWatchlist();
     if (current.includes(symbol)) {
       storage.removeSymbol(symbol);
-      toast(`${symbol} removed from watchlist`);
+      message(`${symbol} removed from watchlist`);
     } else {
       storage.addSymbol(symbol);
-      toast(`${symbol} added to watchlist`);
+      message(`${symbol} added to watchlist`);
     }
     this.renderWatchlist();
     this.renderCatalog();
@@ -270,7 +270,7 @@ class MarketDeskApp {
     const to = qs("#fx-to")?.value;
     const out = qs("#fx-result");
     if (!this.fx || Number.isNaN(amount)) {
-      toast("Enter a valid amount.", "error");
+      message("Enter a valid amount.", "error");
       return;
     }
     try {
@@ -283,7 +283,7 @@ class MarketDeskApp {
       out.classList.add("is-pop");
       setTimeout(() => out.classList.remove("is-pop"), 400);
     } catch (error) {
-      toast(error.message, "error");
+      message(error.message, "error");
     }
   }
 

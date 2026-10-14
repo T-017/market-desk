@@ -32,11 +32,11 @@ export function setBusy(el, busy) {
   el.setAttribute("aria-busy", busy ? "true" : "false");
 }
 
-export function toast(message, kind = "info") {
-  const host = qs("#toast-host");
+export function message(message, kind = "info") {
+  const host = qs("#message-host");
   if (!host) return;
   const node = document.createElement("div");
-  node.className = `toast toast--${kind}`;
+  node.className = `message message--${kind}`;
   node.textContent = message;
   host.appendChild(node);
   requestAnimationFrame(() => node.classList.add("is-visible"));
