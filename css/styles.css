@@ -1,17 +1,17 @@
 /* Global CSS variables and base styles ------------------------------------------------------------------------------------------------------------- */
 :root {
-  --bg: #0b1220;
-  --bg-elevated: #121a2b;
-  --bg-soft: #1a2438;
-  --line: #243049;
+  --bg: #172a51;
+  --bg-elevated: #191e2a;
+  --bg-soft: #293958;
+  --line: #3a4865;
   --text: #e8eef8;
   --muted: #9aa8bd;
-  --accent: #7dd3fc;
-  --accent-strong: #38bdf8;
-  --gold: #e8c47c;
+  --accent: #77d4ff;
+  --accent-strong: #62cffe;
+  --gold: #f7ca6f;
   --up: #34d399;
-  --down: #f87171;
-  --danger: #fb7185;
+  --down: #fa6262;
+  --danger: #cc4155;
   --shadow: 0 18px 40px rgba(3, 8, 20, 0.45);
   --radius: 18px;
   --font: "Segoe UI", "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
@@ -21,14 +21,14 @@
 }
 
 [data-theme="light"] {
-  --bg: #f3f6fb;
+  --bg: #cfdef7;
   --bg-elevated: #ffffff;
   --bg-soft: #e8eef7;
   --line: #d5deeb;
   --text: #122033;
   --muted: #4b5b70;
-  --accent: #0369a1;
-  --accent-strong: #0284c7;
+  --accent: #ffc95d;
+  --accent-strong: #08557b;
   --gold: #b45309;
   --shadow: 0 16px 32px rgba(15, 35, 70, 0.08);
 }

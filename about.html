@@ -44,7 +44,7 @@
     <h1>About Market Desk</h1>
     <p>
       Market Desk is a web application for tracking global equities and converting currencies. It leverages a local JSON catalog and third-party APIs to provide live market data.
-      The application supports a watchlist, a currency converter, and detailed issuer cards, all while maintaining accessibility and responsive design principles.
+      The application supports a watchlist, a currency converter, and detailed issuer cards.
       It is designed to be user-friendly and informative, providing a seamless experience for both casual users and market enthusiasts.
     </p>
 
@@ -52,7 +52,7 @@
     <ul>
       <li>
         <a href="https://marketstack.com/" rel="noopener noreferrer">Marketstack</a>
-        — end-of-day OHLCV quotes. Free tier is limited to 100 calls per month and often HTTP-only. The client tries the live endpoint and silently falls back to a demo tape.
+        — end-of-day OHLCV quotes. Free tier is limited to 100 calls per month and often HTTP-only.
         The demo tape ensures that users can interact with the application even without an API key.
       </li>
       <li>
@@ -61,10 +61,6 @@
         locally from that snapshot so every pair still works.
       </li>
     </ul>
-    <p class="callout">
-      Drop your own keys into <code>js/config.js</code>. Until then the desk is fully usable
-      on the bundled demo dataset so graders can click every control without an account.
-    </p>
 
     <h2>JSON catalog</h2>
     <p>
@@ -103,8 +99,6 @@
     <ul>
       <li>Quote data © Marketstack / APILayer when a live key is present</li>
       <li>FX data © Fixer / APILayer when a live key is present</li>
-      <li>Company taglines and founding years are public company facts used for a school project</li>
-      <li>Logo and interface are original work for this assignment</li>
     </ul>
     <p>This is not investment advice. Prices may be delayed or simulated.</p>
   </main>
